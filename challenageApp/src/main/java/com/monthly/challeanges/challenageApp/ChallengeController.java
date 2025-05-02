@@ -16,7 +16,7 @@ public class ChallengeController {
     //creating a constructor
     public ChallengeController(){
         //adding a challenge into a list
-        Challenge challenge1=new Challenge(100L, "January", "New challange i am adding here");
+        Challenge challenge1=new Challenge(100L, "January", "New challange i am adding here so that I can see the challanges for the user");
         challenges.add(challenge1);
     }
 
