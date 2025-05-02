@@ -1,2 +1,2 @@
-# challenageApp
-This is spring boot application where we are retrieving challenges
+# challengeApp
+To build a Spring Boot application that will help us store and retrieve challenges that are stored monthly
