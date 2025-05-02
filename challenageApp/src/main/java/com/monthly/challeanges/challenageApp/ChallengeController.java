@@ -11,7 +11,7 @@ import java.util.List;
 //This is a controller
 @RestController
 public class ChallengeController {
-    private List<Challenge> challenges= new ArrayList<>();
+    private List<Challenge> challenges = new ArrayList<>();
 
     //creating a constructor
     public ChallengeController(){
