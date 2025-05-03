@@ -8,6 +8,9 @@ import java.util.List;
 
 //This is a controller
 @RestController
+//we use request mmapping if the repeative end point so we define in request mapping and for every request
+// we do not need to write repeative task again and again only we write unique part so our class looks like clean
+@RequestMapping("/challenges")
 public class ChallengeController {
     private ChallengeService challengeService;
 
@@ -19,14 +22,14 @@ public class ChallengeController {
 
 
     //Creating GET request to get all challenges
-    @GetMapping("/challenges")
+    @GetMapping
     public ResponseEntity<List<Challenge>> getAllChallenges(){
         //handle custom http status  code
         return new ResponseEntity<>(challengeService.getAllChallenges(),HttpStatus.OK);
     }
 
     //Creating POST request to adding a challenge by the user
-    @PostMapping("/challenges")
+    @PostMapping
     public ResponseEntity<String> addChallenge(@RequestBody Challenge challenge){
         boolean isChallangeAddded = challengeService.addChallenge(challenge);
         if(isChallangeAddded){
@@ -40,7 +43,7 @@ public class ChallengeController {
     }
 
     //Creating Get request to get a monthly challenge
-    @GetMapping("/challenges/{month}")
+    @GetMapping("/{month}")
     public ResponseEntity <Challenge> getMonthlyChallenges(@PathVariable String month){
         Challenge challenge=challengeService.getMonthlyChallenges(month);
         if(challenge != null){
@@ -54,7 +57,7 @@ public class ChallengeController {
     }
 
     //Creating put request to get a replace the challenge id month and description
-    @PutMapping("/challenges/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateChallenge(@PathVariable Long id, @RequestBody Challenge updateChallenge){
         boolean isChallengeUpdated = challengeService.updateChallenge(id, updateChallenge);
         if(isChallengeUpdated){
@@ -68,7 +71,7 @@ public class ChallengeController {
     }
 
     //creating a delete request to remove the data
-    @DeleteMapping("challenges/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteChallenge(@PathVariable Long id){
         boolean isChallengeDeleted = challengeService.deleteChallenge(id);
         if(isChallengeDeleted){
