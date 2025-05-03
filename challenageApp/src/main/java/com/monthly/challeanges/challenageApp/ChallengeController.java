@@ -1,5 +1,7 @@
 package com.monthly.challeanges.challenageApp;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,32 +20,50 @@ public class ChallengeController {
 
     //Creating GET request to get all challenges
     @GetMapping("/challenges")
-    public List<Challenge> getAllChallenges(){
-
-        return challengeService.getAllChallenges();
+    public ResponseEntity<List<Challenge>> getAllChallenges(){
+        //handle custom http status  code
+        return new ResponseEntity<>(challengeService.getAllChallenges(),HttpStatus.OK);
     }
 
     //Creating POST request to adding a challenge by the user
     @PostMapping("/challenges")
-    public String addChallenge(@RequestBody Challenge challenge){
+    public ResponseEntity<String> addChallenge(@RequestBody Challenge challenge){
         boolean isChallangeAddded = challengeService.addChallenge(challenge);
         if(isChallangeAddded){
-            return "challenge added successfully";
+            //handle custom http status  code
+            return new ResponseEntity<>("challenge added successfully", HttpStatus.OK);
         }
         else{
-            return "challenge not added successfully";
+            //handle custom http status  code
+            return new ResponseEntity<>("challenge not added successfully", HttpStatus.NOT_FOUND);
         }
     }
 
     //Creating Get request to get a monthly challenge
     @GetMapping("/challenges/{month}")
-    public Challenge getMonthlyChallenges(@PathVariable String month){
+    public ResponseEntity <Challenge> getMonthlyChallenges(@PathVariable String month){
         Challenge challenge=challengeService.getMonthlyChallenges(month);
         if(challenge != null){
-            return challenge;
+            //handle custom http status  code
+            return new ResponseEntity<>(challenge, HttpStatus.OK);
         }
         else{
-            return null;
+            //handle custom http status  code
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //Creating put request to get a replace the challenge id month and description
+    @PutMapping("/challenges/{id}")
+    public ResponseEntity<String> updateChallenge(@PathVariable Long id, @RequestBody Challenge updateChallenge){
+        boolean isChallengeUpdated = challengeService.updateChallenge(id, updateChallenge);
+        if(isChallengeUpdated){
+            //handle custom http status  code
+            return new ResponseEntity<>("challenge updated successfully", HttpStatus.OK);
+        }
+        else{
+            //handle custom http status  code
+            return new ResponseEntity<>("challenge not updated successfully", HttpStatus.NOT_FOUND);
         }
     }
 }
